@@ -25,42 +25,46 @@ public class MainActivity extends AppCompatActivity {
         EditText campoTexto = (EditText) findViewById(R.id.missatge);
         EditText ip = (EditText) findViewById(R.id.ip);
         try {
-            URI uri = new URI("ws://localhost:8080/websocket");
+            URI uri = new URI("ws://192.168.18.45:8081");
+
             WebSocketClient webSocketClient = new WebSocketClient(uri) {
+
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
-                    // Se ha conectado al servidor
+                    Log.i("INFO","Dentro");
                 }
 
                 @Override
                 public void onMessage(String message) {
-                    // Se ha recibido un mensaje del servidor
+                    Log.i("INFO","mensage");
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-                    // Se ha desconectado del servidor
+                    Log.i("INFO","Cerrado");
                 }
 
                 @Override
                 public void onError(Exception ex) {
-                    // Se ha producido un error
+
+                    Log.i("INFO",ex.toString());
                 }
             };
 
+
+            final Button conn = findViewById(R.id.conectar);//conectar
+            conn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    webSocketClient.connect();
+                }
+            });
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
 
 
-        final Button conn = findViewById(R.id.conectar);//conectar
-        conn.setOnClickListener(new View.OnClickListener(){
-             @Override
-            public void onClick(View view) {
 
-
-                }
-                });
 
         ran.setOnClickListener(new View.OnClickListener(){
 
